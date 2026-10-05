@@ -1,0 +1,48 @@
+{
+  "name": "SaaS Scolaire - Dev Environment (Codespaces)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:1": {},
+    "ghcr.io/devcontainers/features/postgresql:1": {
+      "version": "15"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "firsttris.vscode-nest-js-snippets",
+        "prisma.prisma",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "humao.rest-client"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  },
+  "forwardPorts": [3000, 5432, 6379, 9000],
+  "portsAttributes": {
+    "3000": {
+      "label": "API Backend (NestJS)",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL DB",
+      "onAutoForward": "ignore"
+    },
+    "6379": {
+      "label": "Redis Queue (BullMQ)",
+      "onAutoForward": "ignore"
+    },
+    "9000": {
+      "label": "MinIO S3 Storage",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "npm install -g @nestjs/cli && npm install",
+  "remoteUser": "node"
+}
